@@ -27,7 +27,7 @@ use cosmic::{
         rectangle_tracker::{RectangleTracker, RectangleUpdate, rectangle_tracker_subscription},
     },
 };
-use cosmic_comp_config::{CosmicCompConfig, XkbConfig};
+use cosmic_comp_config::{CosmicCompConfig, InputMethodKeyboardMap, XkbConfig};
 use std::{
     os::unix::{
         io::{FromRawFd, RawFd},
@@ -219,8 +219,11 @@ impl cosmic::Application for Window {
     }
 
     fn view(&self) -> Element<'_, Self::Message> {
+        let ime_map = InputMethodKeyboardMap::load();
         let applet_text = if let Some(l) = self.active_layouts.get(self.current_layout) {
-            if !l.variant.is_empty() {
+            if let Some(label) = ime_map.get_label(&l.layout) {
+                label.to_string()
+            } else if !l.variant.is_empty() {
                 format!("{} ({})", l.layout, l.variant)
             } else {
                 l.layout.clone()
@@ -328,7 +331,6 @@ impl Window {
             .chain(std::iter::repeat(""));
 
         'outer: for (layout, variant) in layouts.zip(variants) {
-            println!("{layout} : {variant}");
             for xkb_layout in &self.layouts {
                 if layout != xkb_layout.name() {
                     continue;
