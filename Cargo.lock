@@ -657,7 +657,15 @@ dependencies = [
 [[package]]
 name = "build_helpers"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
+dependencies = [
+ "cfg_aliases",
+]
+
+[[package]]
+name = "build_helpers"
+version = "0.14.0"
+source = "git+https://github.com/pop-os/libcosmic#03d7dcb832bc6d15bc1bb07327a1aa426b2d5bc0"
 dependencies = [
  "cfg_aliases",
 ]
@@ -1089,7 +1097,7 @@ name = "cosmic-applet-input-sources"
 version = "1.9.0"
 dependencies = [
  "cosmic-client-toolkit",
- "cosmic-comp-config",
+ "cosmic-comp-config 1.0.0",
  "futures",
  "i18n-embed",
  "i18n-embed-fl",
@@ -1211,7 +1219,7 @@ version = "1.9.0"
 dependencies = [
  "anyhow",
  "cosmic-client-toolkit",
- "cosmic-comp-config",
+ "cosmic-comp-config 0.1.0",
  "cosmic-protocols",
  "i18n-embed",
  "i18n-embed-fl",
@@ -1315,21 +1323,31 @@ version = "0.1.0"
 source = "git+https://github.com/pop-os/cosmic-comp.git?rev=5eb5af4#5eb5af46756f2f2bc5e812cf68fe4c4b79efd924"
 dependencies = [
  "cosmic-config",
- "input",
+ "input 0.9.1",
+ "serde",
+]
+
+[[package]]
+name = "cosmic-comp-config"
+version = "1.0.0"
+source = "git+https://github.com/rano-oss/cosmic-comp?branch=input-method-unstable-v3#f59882cd57c01c8022eea06a96c9d33014b47e0e"
+dependencies = [
+ "cosmic-config",
+ "input 0.10.0",
  "serde",
 ]
 
 [[package]]
 name = "cosmic-config"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/libcosmic?branch=input-method-unstable-v3#4a56ea5cba66282569b6f5726206e2ab5b5c09cf"
 dependencies = [
  "atomicwrites",
  "cosmic-config-derive",
  "cosmic-settings-daemon",
  "dirs",
  "futures-util",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "known-folders",
  "notify",
  "ron 0.12.2",
@@ -1343,7 +1361,7 @@ dependencies = [
 [[package]]
 name = "cosmic-config-derive"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/libcosmic?branch=input-method-unstable-v3#4a56ea5cba66282569b6f5726206e2ab5b5c09cf"
 dependencies = [
  "quote",
  "syn 2.0.119",
@@ -1419,7 +1437,7 @@ dependencies = [
 [[package]]
 name = "cosmic-panel-config"
 version = "1.9.0"
-source = "git+https://github.com/pop-os/cosmic-panel#d6387697faf96f1a9cb04e580753089eec350249"
+source = "git+https://github.com/pop-os/cosmic-panel#b5cc19e351b82eed999097ced1ff267d27bf8e7a"
 dependencies = [
  "anyhow",
  "cosmic-config",
@@ -1450,7 +1468,7 @@ version = "1.9.0"
 source = "git+https://github.com/pop-os/cosmic-settings#a366fc7bcecdf576e07bc609e58d30e45b69e2a0"
 dependencies = [
  "cosmic-protocols",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/pop-os/libcosmic)",
  "num-derive",
  "num-traits",
  "smithay-client-toolkit",
@@ -1465,7 +1483,7 @@ source = "git+https://github.com/pop-os/cosmic-settings#a366fc7bcecdf576e07bc609
 dependencies = [
  "cosmic-dbus-a11y",
  "futures",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/pop-os/libcosmic)",
  "tokio",
  "tracing",
  "zbus",
@@ -1501,7 +1519,7 @@ dependencies = [
 [[package]]
 name = "cosmic-settings-config"
 version = "1.9.0"
-source = "git+https://github.com/pop-os/cosmic-settings-daemon#ac6190062c67dd687c2c1ea66e6cbea4dc9261b9"
+source = "git+https://github.com/pop-os/cosmic-settings-daemon#f22461b19ae03932df4234ceac28fd8b64ae6198"
 dependencies = [
  "cosmic-config",
  "ron 0.11.0",
@@ -1525,7 +1543,7 @@ version = "1.9.0"
 source = "git+https://github.com/pop-os/cosmic-settings#a366fc7bcecdf576e07bc609e58d30e45b69e2a0"
 dependencies = [
  "futures",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/pop-os/libcosmic)",
  "log",
  "tokio",
  "tokio-stream",
@@ -1538,7 +1556,7 @@ version = "1.9.0"
 source = "git+https://github.com/pop-os/cosmic-settings#a366fc7bcecdf576e07bc609e58d30e45b69e2a0"
 dependencies = [
  "futures",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/pop-os/libcosmic)",
  "log",
  "tokio",
  "tokio-stream",
@@ -1573,7 +1591,7 @@ dependencies = [
 [[package]]
 name = "cosmic-theme"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/libcosmic?branch=input-method-unstable-v3#4a56ea5cba66282569b6f5726206e2ab5b5c09cf"
 dependencies = [
  "almost",
  "configparser",
@@ -1929,7 +1947,7 @@ dependencies = [
  "libc",
  "option-ext",
  "redox_users",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -2127,7 +2145,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -2910,14 +2928,14 @@ dependencies = [
 [[package]]
 name = "iced"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "dnd",
  "iced_accessibility",
- "iced_core",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "iced_debug",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "iced_program",
  "iced_renderer",
  "iced_runtime",
@@ -2932,7 +2950,7 @@ dependencies = [
 [[package]]
 name = "iced_accessibility"
 version = "0.1.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "accesskit",
  "accesskit_winit",
@@ -2941,10 +2959,10 @@ dependencies = [
 [[package]]
 name = "iced_core"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "bitflags 2.13.2",
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "bytes",
  "cosmic-client-toolkit",
  "dnd",
@@ -2965,22 +2983,46 @@ dependencies = [
 ]
 
 [[package]]
+name = "iced_core"
+version = "0.14.0"
+source = "git+https://github.com/pop-os/libcosmic#03d7dcb832bc6d15bc1bb07327a1aa426b2d5bc0"
+dependencies = [
+ "bitflags 2.13.2",
+ "build_helpers 0.14.0 (git+https://github.com/pop-os/libcosmic)",
+ "bytes",
+ "dnd",
+ "glam",
+ "lilt",
+ "log",
+ "mime 0.1.0",
+ "num-traits",
+ "palette",
+ "raw-window-handle",
+ "rustc-hash 2.1.3",
+ "smol_str",
+ "thiserror 2.0.20",
+ "unicode-segmentation",
+ "web-time",
+ "window_clipboard",
+]
+
+[[package]]
 name = "iced_debug"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
- "iced_core",
- "iced_futures",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "log",
 ]
 
 [[package]]
 name = "iced_futures"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "futures",
- "iced_core",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "log",
  "rustc-hash 2.1.3",
  "tokio",
@@ -2989,16 +3031,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "iced_futures"
+version = "0.14.0"
+source = "git+https://github.com/pop-os/libcosmic#03d7dcb832bc6d15bc1bb07327a1aa426b2d5bc0"
+dependencies = [
+ "futures",
+ "iced_core 0.14.0 (git+https://github.com/pop-os/libcosmic)",
+ "log",
+ "rustc-hash 2.1.3",
+ "wasm-bindgen-futures",
+ "wasmtimer",
+]
+
+[[package]]
 name = "iced_graphics"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "bitflags 2.13.2",
  "bytemuck",
  "cosmic-text",
  "half",
- "iced_core",
- "iced_futures",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "image",
  "kamadak-exif",
  "log",
@@ -3012,7 +3067,7 @@ dependencies = [
 [[package]]
 name = "iced_program"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "iced_graphics",
  "iced_runtime",
@@ -3021,7 +3076,7 @@ dependencies = [
 [[package]]
 name = "iced_renderer"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "iced_graphics",
  "iced_tiny_skia",
@@ -3033,14 +3088,14 @@ dependencies = [
 [[package]]
 name = "iced_runtime"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "bytes",
  "cosmic-client-toolkit",
  "dnd",
- "iced_core",
- "iced_futures",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "raw-window-handle",
  "thiserror 2.0.20",
  "window_clipboard",
@@ -3049,7 +3104,7 @@ dependencies = [
 [[package]]
 name = "iced_tiny_skia"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "bytemuck",
  "cosmic-text",
@@ -3066,11 +3121,11 @@ dependencies = [
 [[package]]
 name = "iced_wgpu"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
  "as-raw-xcb-connection",
  "bitflags 2.13.2",
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "bytemuck",
  "cosmic-client-toolkit",
  "cryoglyph",
@@ -3098,9 +3153,9 @@ dependencies = [
 [[package]]
 name = "iced_widget"
 version = "0.14.2"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "cosmic-client-toolkit",
  "dnd",
  "iced_renderer",
@@ -3117,14 +3172,14 @@ dependencies = [
 [[package]]
 name = "iced_winit"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3#afd2189c161bfb36d82c2eeb9bc6e0ee88d49b0f"
 dependencies = [
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "cosmic-client-toolkit",
  "cursor-icon",
  "dnd",
  "iced_debug",
- "iced_futures",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "iced_graphics",
  "iced_program",
  "iced_runtime",
@@ -3693,6 +3748,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "input"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9793345a65d71317763a33066b5d8351f8760dde8d4930fe9e39b5f14a7959d"
+dependencies = [
+ "bitflags 2.13.2",
+ "input-sys",
+ "libc",
+ "log",
+ "udev",
+]
+
+[[package]]
 name = "input-sys"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3921,7 +3989,7 @@ version = "1.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a1886916523694cd6ea3d175f03a1e5010699a2a4cc13696d83d7bea1d80638"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -3980,12 +4048,12 @@ checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
 [[package]]
 name = "libcosmic"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#03c8f93b294ad239ea935f6dd3c14a15acde8d0d"
+source = "git+https://github.com/rano-oss/libcosmic?branch=input-method-unstable-v3#4a56ea5cba66282569b6f5726206e2ab5b5c09cf"
 dependencies = [
  "apply",
  "ashpd 0.12.3",
  "auto_enums",
- "build_helpers",
+ "build_helpers 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "cosmic-client-toolkit",
  "cosmic-config",
  "cosmic-freedesktop-icons",
@@ -4002,8 +4070,8 @@ dependencies = [
  "i18n-embed",
  "i18n-embed-fl",
  "iced",
- "iced_core",
- "iced_futures",
+ "iced_core 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
+ "iced_futures 0.14.0 (git+https://github.com/rano-oss/iced.git?branch=input-method-unstable-v3)",
  "iced_renderer",
  "iced_runtime",
  "iced_tiny_skia",
@@ -4516,7 +4584,7 @@ version = "0.50.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -5606,7 +5674,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.12.1",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -6003,7 +6071,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c3d1e2c7f27f8d4cb10542a02c49005dbd6e93095799d6f3be745fae9f8fedd4"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -6210,7 +6278,7 @@ dependencies = [
  "getrandom 0.4.3",
  "once_cell",
  "rustix 1.1.5",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -6602,7 +6670,7 @@ checksum = "f2f6fb2847f6742cd76af783a2a2c49e9375d0a111c7bef6f71cd9e738c72d6e"
 dependencies = [
  "memoffset",
  "tempfile",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -6902,9 +6970,9 @@ dependencies = [
 
 [[package]]
 name = "wayland-client"
-version = "0.31.15"
+version = "0.31.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e3c36a0f861ad76d0901f2800b46321410d9f73f2ea88aac0650d86c32688073"
+checksum = "645c7c96bb74690c3189b5c9cb4ca1627062bb23693a4fad9d8c3de958260144"
 dependencies = [
  "bitflags 2.13.2",
  "rustix 1.1.5",
@@ -7234,7 +7302,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
@@ -7981,7 +8049,7 @@ checksum = "2fb433233f2df9344722454bc7e96465c9d03bff9d77c248f9e7523fe79585b5"
 [[package]]
 name = "xdg-shell-wrapper-config"
 version = "1.9.0"
-source = "git+https://github.com/pop-os/cosmic-panel#d6387697faf96f1a9cb04e580753089eec350249"
+source = "git+https://github.com/pop-os/cosmic-panel#b5cc19e351b82eed999097ced1ff267d27bf8e7a"
 dependencies = [
  "serde",
  "wayland-protocols-wlr",

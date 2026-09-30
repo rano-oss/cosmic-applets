@@ -378,5 +378,3 @@ impl Window {
         active_layouts
     }
 }
-
-/// File-based watcher for `active_layout` (works without cosmic-settings-daemon).
