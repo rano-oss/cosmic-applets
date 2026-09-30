@@ -6,7 +6,7 @@ license = "GPL-3.0-only"
 
 [dependencies]
 cctk.workspace = true
-cosmic-comp-config = { path = "../../cosmic-comp/cosmic-comp-config" }
+cosmic-comp-config = { git = "https://github.com/rano-oss/cosmic-comp", branch = "input-method-unstable-v3" }
 futures.workspace = true
 i18n-embed-fl.workspace = true
 i18n-embed.workspace = true

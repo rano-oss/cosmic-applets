@@ -27,7 +27,7 @@ use cosmic::{
         rectangle_tracker::{RectangleTracker, RectangleUpdate, rectangle_tracker_subscription},
     },
 };
-use cosmic_comp_config::{CosmicCompConfig, InputMethodKeyboardMap, XkbConfig};
+use cosmic_comp_config::{CosmicCompConfig, XkbConfig};
 use std::{
     os::unix::{
         io::{FromRawFd, RawFd},
@@ -84,6 +84,7 @@ pub struct Window {
     popup: Option<Id>,
     layouts: Vec<KeyboardLayout>,
     active_layouts: Vec<ActiveLayout>,
+    comp_config: CosmicCompConfig,
     rectangle_tracker: Option<RectangleTracker<u32>>,
     rectangle: Rectangle,
     wayland_connection: Option<Connection>,
@@ -131,6 +132,7 @@ impl cosmic::Application for Window {
             core,
             popup: None,
             active_layouts: Vec::new(),
+            comp_config: CosmicCompConfig::default(),
             rectangle_tracker: None,
             rectangle: Rectangle::default(),
             wayland_connection: flags.wayland_connection,
@@ -175,6 +177,7 @@ impl cosmic::Application for Window {
             }
             Message::CompConfig(config) => {
                 self.active_layouts = self.update_xkb(&config.xkb_config);
+                self.comp_config = *config;
             }
             Message::KeyboardSettings => {
                 let mut cmd = std::process::Command::new("cosmic-settings");
@@ -219,10 +222,14 @@ impl cosmic::Application for Window {
     }
 
     fn view(&self) -> Element<'_, Self::Message> {
-        let ime_map = InputMethodKeyboardMap::load();
         let applet_text = if let Some(l) = self.active_layouts.get(self.current_layout) {
-            if let Some(label) = ime_map.get_label(&l.layout) {
-                label.to_string()
+            if let Some(entry) = self
+                .comp_config
+                .input_method_map
+                .get(&l.layout)
+                .filter(|e| !e.label.is_empty())
+            {
+                entry.label.clone()
             } else if !l.variant.is_empty() {
                 format!("{} ({})", l.layout, l.variant)
             } else {
@@ -371,3 +378,5 @@ impl Window {
         active_layouts
     }
 }
+
+/// File-based watcher for `active_layout` (works without cosmic-settings-daemon).
