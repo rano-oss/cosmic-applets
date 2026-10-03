@@ -82,10 +82,7 @@ pub fn menu_cn_en_settings(english: bool) -> Vec<MenuItem> {
     } else {
         MenuItem::new(action::TOGGLE_MODE, "Switch to English")
     };
-    vec![
-        toggle,
-        MenuItem::new(action::SETTINGS, "Settings…"),
-    ]
+    vec![toggle, MenuItem::new(action::SETTINGS, "Settings…")]
 }
 
 /// Events forwarded from D-Bus methods into the engine.

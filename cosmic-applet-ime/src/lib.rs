@@ -13,22 +13,21 @@ use cosmic::{
     iced::Subscription,
     iced::core::window,
     iced::{
+        Task,
         platform_specific::shell::commands::popup::{destroy_popup, get_popup},
         stream,
         window::Id,
-        Task,
     },
     prelude::*,
     widget::{self, autosize},
 };
 use cosmic_comp_config::CosmicCompConfig;
 use futures::StreamExt;
-use ime_control::{MenuItem, INTERFACE};
+use ime_control::{INTERFACE, MenuItem};
 
 const APP_ID: &str = "com.system76.CosmicAppletIme";
 
-static AUTOSIZE_MAIN_ID: LazyLock<widget::Id> =
-    LazyLock::new(|| widget::Id::new("autosize-main"));
+static AUTOSIZE_MAIN_ID: LazyLock<widget::Id> = LazyLock::new(|| widget::Id::new("autosize-main"));
 
 pub fn run() -> cosmic::iced::Result {
     tracing_subscriber::fmt().with_env_filter("warn").init();
@@ -211,10 +210,8 @@ impl cosmic::Application for ImeApplet {
     }
 
     fn subscription(&self) -> Subscription<Self::Message> {
-        let config = self
-            .core
-            .watch_config("com.system76.CosmicComp")
-            .map(|update: cosmic::cosmic_config::Update<CosmicCompConfig>| {
+        let config = self.core.watch_config("com.system76.CosmicComp").map(
+            |update: cosmic::cosmic_config::Update<CosmicCompConfig>| {
                 if !update.errors.is_empty() {
                     tracing::error!(
                         "errors loading config {:?}: {:?}",
@@ -223,7 +220,8 @@ impl cosmic::Application for ImeApplet {
                     );
                 }
                 Message::CompConfig(Box::new(update.config))
-            });
+            },
+        );
 
         let ime = match &self.active_command {
             Some(cmd) => ime_subscription(cmd.clone()),
@@ -252,11 +250,7 @@ fn active_ime_bus_id(cfg: &CosmicCompConfig) -> Option<String> {
         entry.command.as_str()
     };
     let id = ime_control::bus_id_from(raw);
-    if id.is_empty() {
-        None
-    } else {
-        Some(id)
-    }
+    if id.is_empty() { None } else { Some(id) }
 }
 
 fn ime_subscription(command: String) -> Subscription<Message> {
