@@ -18,6 +18,8 @@ members = [
     "cosmic-applet-workspaces",
     "cosmic-panel-button",
     "cosmic-applet-input-sources",
+    "cosmic-applet-ime",
+    "ime-control",
     "cosmic-applet-a11y",
     "cosmic-applets-config",
 ]
@@ -40,7 +42,7 @@ i18n-embed = { version = "0.16.0", features = [
     "desktop-requester",
 ] }
 i18n-embed-fl = "0.10"
-libcosmic = { git = "https://github.com/rano-oss/libcosmic", branch = "input-method-unstable-v3", default-features = false, features = [
+libcosmic = { git = "https://github.com/rano-oss/libcosmic", branch = "experimental/xx-im-preedit-start", default-features = false, features = [
     "applet",
     "applet-token",
     "dbus-config",
@@ -59,7 +61,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
 tracing-log = "0.2.0"
 tokio = { version = "1.49.0", features = ["full"] }
-cosmic-config = { git = "https://github.com/rano-oss/libcosmic", branch = "input-method-unstable-v3" }
+cosmic-config = { git = "https://github.com/rano-oss/libcosmic", branch = "experimental/xx-im-preedit-start" }
 serde = { version = "1.0.228", features = ["derive"] }
 zlink = "0.5.0"
 
@@ -72,8 +74,40 @@ lto = "thin"
 ignored = ["libcosmic"]
 
 [patch."https://github.com/pop-os/libcosmic"]
-libcosmic = { git = "https://github.com/rano-oss/libcosmic", branch = "input-method-unstable-v3" }
-cosmic-config = { git = "https://github.com/rano-oss/libcosmic", branch = "input-method-unstable-v3" }
+libcosmic = { git = "https://github.com/rano-oss/libcosmic", branch = "experimental/xx-im-preedit-start" }
+cosmic-config = { git = "https://github.com/rano-oss/libcosmic", branch = "experimental/xx-im-preedit-start" }
+# cosmic-settings subscriptions pull iced_* as path crates from pop-os/libcosmic;
+# redirect those to the same rano-oss iced tip used by libcosmic.
+iced = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_core = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_futures = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_runtime = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_wgpu = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_winit = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_renderer = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_graphics = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_tiny_skia = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_widget = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_program = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_debug = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_accessibility = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+build_helpers = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+
+[patch."https://github.com/pop-os/iced"]
+iced = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_core = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_futures = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_runtime = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_wgpu = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_winit = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_renderer = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_graphics = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_tiny_skia = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_widget = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_program = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_debug = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+iced_accessibility = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
+build_helpers = { git = "https://github.com/rano-oss/iced", branch = "experimental/xx-im-preedit-start" }
 
 [patch."https://github.com/smithay/client-toolkit.git"]
 sctk = { package = "smithay-client-toolkit", version = "0.20.0" }

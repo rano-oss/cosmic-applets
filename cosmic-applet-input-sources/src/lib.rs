@@ -11,6 +11,7 @@ use cosmic::{
     app,
     app::Core,
     applet::{self},
+    cosmic_config::CosmicConfigEntry,
     cosmic_theme::Spacing,
     iced::Subscription,
     iced::core::window,
@@ -190,6 +191,26 @@ impl cosmic::Application for Window {
                     if let Some(backend) = keyboard_layout.backend().upgrade() {
                         let _ = backend.flush();
                     }
+                }
+                // Persist active_layout so cosmic-comp rebinds the IME
+                // (`apply_saved_active_layout`). set_group alone only moves XKB.
+                if let Some(layout) = self.active_layouts.get(pos) {
+                    let code = layout.layout.clone();
+                    self.current_layout = pos;
+                    self.comp_config.active_layout = code.clone();
+                    std::thread::spawn(move || {
+                        use cosmic::cosmic_config::{Config, ConfigSet};
+                        match Config::new("com.system76.CosmicComp", CosmicCompConfig::VERSION) {
+                            Ok(helper) => {
+                                if let Err(err) = helper.set("active_layout", &code) {
+                                    tracing::error!(?err, "Failed to set active_layout");
+                                }
+                            }
+                            Err(err) => {
+                                tracing::error!(?err, "Failed to open CosmicComp config");
+                            }
+                        }
+                    });
                 }
             }
             Message::Surface(a) => {
