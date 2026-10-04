@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Input Method
+Name[zh_CN]=输入法
+Comment=Show and control the active Wayland input method
+Comment[zh_CN]=显示并控制当前输入法
+Type=Application
+Exec=cosmic-applet-ime
+Terminal=false
+NoDisplay=true
+X-CosmicApplet=true
+X-CosmicHoverPopup=Auto
+Icon=input-keyboard-symbolic
+Categories=COSMIC;
+StartupNotify=true

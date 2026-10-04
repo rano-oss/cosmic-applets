@@ -11,6 +11,7 @@ use cosmic::{
     app,
     app::Core,
     applet::{self},
+    cosmic_config::CosmicConfigEntry,
     cosmic_theme::Spacing,
     iced::Subscription,
     iced::core::window,
@@ -84,6 +85,7 @@ pub struct Window {
     popup: Option<Id>,
     layouts: Vec<KeyboardLayout>,
     active_layouts: Vec<ActiveLayout>,
+    comp_config: CosmicCompConfig,
     rectangle_tracker: Option<RectangleTracker<u32>>,
     rectangle: Rectangle,
     wayland_connection: Option<Connection>,
@@ -131,6 +133,7 @@ impl cosmic::Application for Window {
             core,
             popup: None,
             active_layouts: Vec::new(),
+            comp_config: CosmicCompConfig::default(),
             rectangle_tracker: None,
             rectangle: Rectangle::default(),
             wayland_connection: flags.wayland_connection,
@@ -175,6 +178,7 @@ impl cosmic::Application for Window {
             }
             Message::CompConfig(config) => {
                 self.active_layouts = self.update_xkb(&config.xkb_config);
+                self.comp_config = *config;
             }
             Message::KeyboardSettings => {
                 let mut cmd = std::process::Command::new("cosmic-settings");
@@ -187,6 +191,26 @@ impl cosmic::Application for Window {
                     if let Some(backend) = keyboard_layout.backend().upgrade() {
                         let _ = backend.flush();
                     }
+                }
+                // Persist active_layout so cosmic-comp rebinds the IME
+                // (`apply_saved_active_layout`). set_group alone only moves XKB.
+                if let Some(layout) = self.active_layouts.get(pos) {
+                    let code = layout.layout.clone();
+                    self.current_layout = pos;
+                    self.comp_config.active_layout = code.clone();
+                    std::thread::spawn(move || {
+                        use cosmic::cosmic_config::{Config, ConfigSet};
+                        match Config::new("com.system76.CosmicComp", CosmicCompConfig::VERSION) {
+                            Ok(helper) => {
+                                if let Err(err) = helper.set("active_layout", &code) {
+                                    tracing::error!(?err, "Failed to set active_layout");
+                                }
+                            }
+                            Err(err) => {
+                                tracing::error!(?err, "Failed to open CosmicComp config");
+                            }
+                        }
+                    });
                 }
             }
             Message::Surface(a) => {
@@ -220,7 +244,14 @@ impl cosmic::Application for Window {
 
     fn view(&self) -> Element<'_, Self::Message> {
         let applet_text = if let Some(l) = self.active_layouts.get(self.current_layout) {
-            if !l.variant.is_empty() {
+            if let Some(entry) = self
+                .comp_config
+                .input_method_map
+                .get(&l.layout)
+                .filter(|e| !e.label.is_empty())
+            {
+                entry.label.clone()
+            } else if !l.variant.is_empty() {
                 format!("{} ({})", l.layout, l.variant)
             } else {
                 l.layout.clone()
@@ -328,7 +359,6 @@ impl Window {
             .chain(std::iter::repeat(""));
 
         'outer: for (layout, variant) in layouts.zip(variants) {
-            println!("{layout} : {variant}");
             for xkb_layout in &self.layouts {
                 if layout != xkb_layout.name() {
                     continue;
