@@ -10,5 +10,5 @@ NoDisplay=true
 X-CosmicApplet=true
 X-CosmicHoverPopup=Auto
 Icon=input-keyboard-symbolic
-Categories=COSMIC;Applet;
+Categories=COSMIC;
 StartupNotify=true
