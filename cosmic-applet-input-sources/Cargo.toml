@@ -6,10 +6,11 @@ license = "GPL-3.0-only"
 
 [dependencies]
 cctk.workspace = true
-cosmic-comp-config = { git = "https://github.com/pop-os/cosmic-comp.git", rev = "5eb5af4" }
+cosmic-comp-config = { git = "https://github.com/rano-oss/cosmic-comp", branch = "experimental/xx-im-preedit-start" }
 futures.workspace = true
 i18n-embed-fl.workspace = true
 i18n-embed.workspace = true
+ime-control = { git = "https://github.com/rano-oss/ime-control" }
 libcosmic.workspace = true
 rust-embed.workspace = true
 tokio.workspace = true
@@ -17,3 +18,4 @@ tracing-log.workspace = true
 tracing-subscriber.workspace = true
 tracing.workspace = true
 xkb-data = "0.2"
+zbus.workspace = true
