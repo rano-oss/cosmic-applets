@@ -185,13 +185,8 @@ impl cosmic::Application for Window {
             Message::CompConfig(config) => {
                 self.active_layouts = self.update_xkb(&config.xkb_config);
                 self.comp_config = *config;
-                // Prefer config active_layout index when XKB group has not caught up.
-                if let Some(pos) = self
-                    .active_layouts
-                    .iter()
-                    .position(|l| l.layout == self.comp_config.active_layout)
-                {
-                    self.current_layout = pos;
+                if self.current_layout >= self.active_layouts.len() {
+                    self.current_layout = self.active_layouts.len().saturating_sub(1);
                 }
                 return self.refresh_active_ime();
             }
