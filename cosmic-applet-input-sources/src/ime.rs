@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
-//! Control1 client: discover active IME and mirror ModeLabel / MenuItems.
 
 use cosmic::iced::{Subscription, stream};
 use cosmic_comp_config::CosmicCompConfig;
@@ -8,9 +7,6 @@ use ime_control::{INTERFACE, MenuItem};
 
 use crate::Message;
 
-/// Bus id for an IME mapped to `layout` (`chewingwl` / `pinyinwl`), if any.
-///
-/// Uses `app_id` only — cosmic-session launches IMEs by `app_id`.
 pub fn ime_bus_id_for_layout(cfg: &CosmicCompConfig, layout: &str) -> Option<String> {
     if layout.is_empty() {
         return None;

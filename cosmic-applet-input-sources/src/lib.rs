@@ -99,7 +99,6 @@ pub struct Window {
     wayland_connection: Option<Connection>,
     keyboard_layout: Option<ZcosmicKeyboardLayoutV1>,
     current_layout: usize,
-    /// Active IME bus id for the *current* layout (`pinyinwl`, `chewingwl`, …).
     active_ime: Option<String>,
     ime_mode_label: String,
     ime_menu: Vec<MenuItem>,
@@ -202,7 +201,6 @@ impl cosmic::Application for Window {
                         let _ = backend.flush();
                     }
                 }
-                // cosmic-comp SetGroup syncs the IME and persists active_layout.
                 self.current_layout = pos;
                 let close = self.take_popup_destroy();
                 let refresh = self.refresh_active_ime();
@@ -391,24 +389,17 @@ impl Window {
         }
     }
 
-    fn layout_label_code(&self) -> Option<&str> {
-        self.active_layouts
-            .get(self.current_layout)
-            .map(|l| l.layout.as_str())
-    }
-
-    /// Bind Control1 to the IME for the *current* XKB layout (not stale config alone).
     fn refresh_active_ime(&mut self) -> app::Task<Message> {
         let cmd = self
-            .layout_label_code()
-            .and_then(|layout| ime::ime_bus_id_for_layout(&self.comp_config, layout));
+            .active_layouts
+            .get(self.current_layout)
+            .and_then(|l| ime::ime_bus_id_for_layout(&self.comp_config, &l.layout));
         if cmd == self.active_ime {
             return Task::none();
         }
         self.active_ime = cmd;
         self.ime_mode_label.clear();
         self.ime_menu.clear();
-        // Close IME popup if we left an IME layout.
         if self.active_ime.is_none()
             && self.popup.as_ref().is_some_and(|(_, k)| *k == PopupKind::Ime)
         {
